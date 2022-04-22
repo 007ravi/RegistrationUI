@@ -11,34 +11,50 @@ export class SignupComponent implements OnInit {
 
   alluser=false;
   user=false;
+  userData={};
+  searchText:any;
   registerForm: FormGroup = this.fb.group({
-    userName: ['', [Validators.required]],
-    firstName: ['', [Validators.required]],
-    lastName: ['', [Validators.required]],
+    username: ['', [Validators.required]],
+    firstname: ['', [Validators.required]],
+    lastname: ['', [Validators.required]],
+    password: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]]
   });
   constructor( private fb: FormBuilder,private userService:UserService) { }
   ngOnInit(): void {}
   
   
-  get firstName(): any {
-    return this.registerForm.get('firstName');
+  get firstname(): any {
+    return this.registerForm.get('firstname');
   }
-  get lastName(): any {
-    return this.registerForm.get('lastName');
+  get lastname(): any {
+    return this.registerForm.get('lastname');
+  }
+
+  get password(): any {
+    return this.registerForm.get('password');
   }
   get email(): any {
     return this.registerForm.get('email');
   }
-  get userName(): any {
-    return this.registerForm.get('userName');
+  get username(): any {
+    return this.registerForm.get('username');
   }
   registerFormSubmit(): void {
     const formData = this.registerForm.value;
    // delete formData.password1;
     console.log("check"+JSON.stringify(formData));
     // Api Request Here
-    this.userService.createUser(formData).subscribe((data:any)=>{console.log(data)},(err:any)=> {})
+    this.userService.createUser(formData).subscribe(
+      (data:any)=> {console.log(data)},
+      (err:any)=> {console.log(err)}
+      );
+  }
+
+  getUser()
+  {
+    console.log(this.searchText);
+ //   this.userService.findUserByName();
   }
 
   finduser(){
